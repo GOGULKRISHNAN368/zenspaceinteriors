@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { getBodyClass, getPage, normalizePath, prepareMarkup } from './pages.js';
 import { startLegacyRuntime } from './legacyRuntime.js';
+import { SquareWaveLoader } from './components/ui/square-wave-loader.jsx';
 
 function updateAccordion(item, open) {
   const content = item.querySelector('[pb-accordion-element="content"], [pb-accordion-element-menu="content"]');
@@ -122,6 +123,10 @@ function initializePageInteractions(root) {
 
 export default function App() {
   const [pathname, setPathname] = useState(() => normalizePath(window.location.pathname));
+  const [loaderPhase, setLoaderPhase] = useState(() => {
+    const initialPath = normalizePath(window.location.pathname);
+    return ['/', '/it', '/ta'].includes(initialPath) ? 'visible' : 'done';
+  });
   const pageRoot = useRef(null);
   const page = getPage(pathname);
   const markup = useMemo(
@@ -134,6 +139,24 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  useEffect(() => {
+    if (loaderPhase === 'done') {
+      document.documentElement.classList.remove('initial-loader-active');
+      return undefined;
+    }
+
+    document.documentElement.classList.add('initial-loader-active');
+    if (loaderPhase !== 'visible') return undefined;
+
+    const fadeTimer = window.setTimeout(() => setLoaderPhase('closing'), 2500);
+    const removeTimer = window.setTimeout(() => setLoaderPhase('done'), 3000);
+
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, [loaderPhase]);
 
   useEffect(() => {
     const root = pageRoot.current;
@@ -170,10 +193,27 @@ export default function App() {
   }, [markup, page.markup, page.locale, page.title]);
 
   return (
-    <div
-      ref={pageRoot}
-      className="react-page"
-      dangerouslySetInnerHTML={{ __html: markup }}
-    />
+    <>
+      <div
+        ref={pageRoot}
+        className="react-page"
+        dangerouslySetInnerHTML={{ __html: markup }}
+      />
+      {loaderPhase !== 'done' && (
+        <div className={`initial-page-loader${loaderPhase === 'closing' ? ' is-closing' : ''}`}>
+          <div className="initial-page-loader__content">
+            <div className="initial-page-loader__brand">ZENSPACE</div>
+            <SquareWaveLoader
+              className="initial-page-loader__wave"
+              squareClassName="initial-page-loader__square"
+              count={5}
+              size={13}
+              gap={8}
+            />
+            <div className="initial-page-loader__status">Crafting your space</div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
