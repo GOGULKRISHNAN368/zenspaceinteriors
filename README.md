@@ -1,6 +1,6 @@
-# Archicraft React
+# Zenspace React
 
-React/Vite conversion of the Archicraft site. The existing exported assets and page content are reused through a single React entry with client-side routes for the English and Italian experiences.
+React/Vite conversion of the Zenspace site. The existing exported assets and page content are reused through a single React entry with client-side routes for the English and Italian experiences.
 
 ## Run locally
 

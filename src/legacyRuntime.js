@@ -14,13 +14,13 @@ const legacyScriptSources = [
 let runtimePromise;
 
 function loadScript(source) {
-  const existing = document.querySelector(`script[data-archicraft-runtime="${source}"]`);
+  const existing = document.querySelector(`script[data-zenspace-runtime="${source}"]`);
   if (existing) return Promise.resolve();
 
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = source;
-    script.dataset.archicraftRuntime = source;
+    script.dataset.zenspaceRuntime = source;
     script.onload = resolve;
     script.onerror = () => reject(new Error(`Unable to load ${source}`));
     document.body.appendChild(script);

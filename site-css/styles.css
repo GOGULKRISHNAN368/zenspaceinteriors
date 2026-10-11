@@ -65,8 +65,8 @@
     }
 }
 
-/* Archicraft wordmark: same display family as the original brand treatment. */
-.archicraft-brand {
+/* Zenspace wordmark: same display family as the original brand treatment. */
+.zenspace-brand {
     color: #fff;
     display: inline-flex;
     align-items: center;
@@ -78,21 +78,51 @@
     white-space: nowrap;
 }
 
-.archicraft-brand-dark {
+.zenspace-brand-dark {
     color: #1e1e1e;
 }
 
-.archicraft-brand-footer {
+.zenspace-brand-footer {
     font-size: clamp(2.4rem, 5vw, 5.4rem);
     letter-spacing: -0.06em;
 }
 
-.footer-archicraft-wordmark {
+.footer-zenspace-wordmark {
     display: none;
 }
 
 .footer15_bottom-wrapper {
     display: none;
+}
+
+.footer15_link-button {
+    display: block;
+    margin: 0;
+    padding: 0 0 .75rem;
+    color: inherit;
+    font-family: inherit;
+    font-size: var(--_typography---font-styles--body-m-size);
+    font-weight: 300;
+    line-height: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+/* Keep contact-form labels and options readable on the light contact page. */
+.contact-map-section .form8_component_col_right,
+.contact-map-section .form8_component_col_right label,
+.contact-map-section .form8_component_col_right .w-form-label {
+    color: #1e1e1e;
+}
+
+.contact-map-section .form8_component_col_right .form_input {
+    color: #fff;
+}
+
+.contact-map-section .form8_component_col_right .form_radio_input {
+    background-color: #e8e8e8;
 }
 
 /* India craft map markers */
@@ -555,5 +585,41 @@
 
     .rich-text-legal h5 {
         font-size: 1.25rem;
+    }
+}
+
+/* About page: replace the individual team portraits with one studio feature row. */
+.about_studio_single_row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+}
+
+.about_studio_single_card {
+    margin: 0;
+}
+
+.about_studio_single_image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2.35 / 1;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.about_studio_single_caption {
+    margin-top: 1rem;
+    color: inherit;
+    font-size: var(--_typography---font-styles--body-m-size);
+    line-height: 1.3;
+}
+
+.about_studio_single_caption .opacity-50 {
+    color: inherit;
+}
+
+@media screen and (max-width: 767px) {
+    .about_studio_single_image {
+        aspect-ratio: 1.35 / 1;
     }
 }
